@@ -9,6 +9,7 @@ using namespace std;
 // O resultado estará em ordem errada.
 string DecimalParaBinario(int n){
 
+  
     string resultadoParcial = "";
 
     while (n != 0){
@@ -23,10 +24,15 @@ string DecimalParaBinario(int n){
     string resultado = "";
 
     // Prenchendo com zeros a esquerda (se for o caso.
+
+    if (resultadoParcial.length()<8){
     for (int i = 0; i < (8-resultadoParcial.length()); i++)
         resultado = resultado + "0";
 
     resultado = resultado + resultadoParcial;
+    }else        
+
+    resultado = resultadoParcial;
 
     return resultado;
 
@@ -60,7 +66,7 @@ string calcular(int nb1, int nb2, char o){
         case '-': return DecimalParaBinario(nb1-nb2); break;
         case '*': return DecimalParaBinario(nb1*nb2); break;
         case '/': if ( nb2 != 0 ) return DecimalParaBinario(nb1/nb2);
-                  else return DecimalParaBinario(256);
+                  else return "Não existe divisão por 0";
         case '%': return ( nb1%nb2 == 0 ? "0" : DecimalParaBinario(nb1%nb2) ); break;
     }
 
@@ -99,17 +105,14 @@ int main(){
     int n1 = binario_para_decimal(numero_binario1,tv1); // Converte 'numero_binario1' de binário para decimal
     int n2 = binario_para_decimal(numero_binario2,tv2); // Converte 'numero_binario1' de binário para decimal
 
+
+
     // Verificando se está no intervalo de 0 a 255
     if ( (n1 >= 0) && (n1 <= 255) && (n2 >= 0) && (n2 <= 255) ){
 
         // Pega o rescultado do cálculo.
         string resultado = calcular(n1,n2,operador);
-
-        // Se o resultado for diferente de 100000000 (256 em decimal)
-        if ( resultado.compare("100000000") != 0 )
-            cout << "\n" << resultado << "\n"; // Apresenta o resultado.
-        else
-            cout << "\nDivisao por 0 nao existe.\n"; // Caso contrário, mostra o erro (apenas quando a operação de divisão.
+        cout << "\n" << resultado <<"\n";
 
     }else
         cout << "\n numero 1 e/ou numero 2 esta(ao) fora da faixa [0..255].\n";
